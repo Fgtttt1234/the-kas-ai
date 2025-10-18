@@ -1,0 +1,8 @@
+# KAS AI - Requirements
+# Basic requirements for the KAS AI system
+
+# No external dependencies required for basic functionality
+# Add AI model libraries here when integrating with real AI models:
+# openai>=1.0.0
+# anthropic>=0.5.0
+# langchain>=0.0.300
