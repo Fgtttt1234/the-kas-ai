@@ -4,10 +4,15 @@ Example usage of the Daghreeri Expert
 """
 
 from experts import DaghreerIExpert
+from core import banner
 
 
 def main():
     """Demonstrate the usage of الخبير الدغريري."""
+    
+    # Display official identity banner
+    print(banner())
+    print()
     
     # Create an instance of the Daghreeri Expert
     expert = DaghreerIExpert()
