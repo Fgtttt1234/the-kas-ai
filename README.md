@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ### استخدام نظام الهوية - Using the Identity System
 
 ```python
-from core import identity, banner, NAME_AR, NAME_EN, FOUNDER, FOUNDED
+from core import identity, banner, NAME_AR, NAME_EN, FOUNDER, FOUNDED, DESCRIPTION_AR, DESCRIPTION_EN
 
 # Display the identity banner (Arabic by default)
 print(banner())
@@ -55,10 +55,17 @@ print(id_data['name_ar'])  # كازاريلا ما بي تي
 print(id_data['name_en'])  # Kasarella AI MBT
 
 # Access constants directly
-print(NAME_AR)      # كازاريلا ما بي تي
-print(NAME_EN)      # Kasarella AI MBT
-print(FOUNDER)      # المهندس الخبير الدغريري
-print(FOUNDED)      # 25-01-2026
+print(NAME_AR)          # كازاريلا ما بي تي
+print(NAME_EN)          # Kasarella AI MBT
+print(FOUNDER)          # المهندس الخبير الدغريري
+print(FOUNDED)          # 25-01-2026
+print(DESCRIPTION_AR)   # منصة ذكاء اصطناعي تقنية احترافية...
+print(DESCRIPTION_EN)   # Professional technical AI platform...
+
+# Use helper functions
+from core import get_full_name, get_description
+print(get_full_name('ar'))      # كازاريلا ما بي تي
+print(get_description('en'))    # Professional technical AI platform...
 ```
 
 ### الاستخدام الأساسي - Basic Usage

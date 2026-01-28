@@ -5,8 +5,12 @@ Test and demonstration of the identity system
 This script demonstrates all the ways to use the identity module
 """
 
-from core import identity, banner, NAME_AR, NAME_EN, FOUNDER, FOUNDED
-from core.identity import get_full_name, get_description
+from core import (
+    identity, banner, 
+    NAME_AR, NAME_EN, FOUNDER, FOUNDED,
+    DESCRIPTION_AR, DESCRIPTION_EN,
+    get_full_name, get_description
+)
 
 
 def test_constants():
@@ -14,10 +18,12 @@ def test_constants():
     print("=" * 70)
     print("Testing Identity Constants")
     print("=" * 70)
-    print(f"Arabic Name:  {NAME_AR}")
-    print(f"English Name: {NAME_EN}")
-    print(f"Founder:      {FOUNDER}")
-    print(f"Founded:      {FOUNDED}")
+    print(f"Arabic Name:        {NAME_AR}")
+    print(f"English Name:       {NAME_EN}")
+    print(f"Founder:            {FOUNDER}")
+    print(f"Founded:            {FOUNDED}")
+    print(f"Description (AR):   {DESCRIPTION_AR}")
+    print(f"Description (EN):   {DESCRIPTION_EN}")
     print()
 
 

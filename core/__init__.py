@@ -8,8 +8,12 @@ from .identity import (
     NAME_EN,
     FOUNDER,
     FOUNDED,
+    DESCRIPTION_AR,
+    DESCRIPTION_EN,
     banner,
-    identity
+    identity,
+    get_full_name,
+    get_description
 )
 
 __all__ = [
@@ -17,6 +21,10 @@ __all__ = [
     'NAME_EN',
     'FOUNDER',
     'FOUNDED',
+    'DESCRIPTION_AR',
+    'DESCRIPTION_EN',
     'banner',
-    'identity'
+    'identity',
+    'get_full_name',
+    'get_description'
 ]
