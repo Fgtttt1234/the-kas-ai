@@ -38,6 +38,29 @@ pip install -r requirements.txt
 
 ## الاستخدام - Usage
 
+### استخدام نظام الهوية - Using the Identity System
+
+```python
+from core import identity, banner, NAME_AR, NAME_EN, FOUNDER, FOUNDED
+
+# Display the identity banner (Arabic by default)
+print(banner())
+
+# Display the identity banner in English
+print(banner("en"))
+
+# Get identity data as a dictionary
+id_data = identity()
+print(id_data['name_ar'])  # كازاريلا ما بي تي
+print(id_data['name_en'])  # Kasarella AI MBT
+
+# Access constants directly
+print(NAME_AR)      # كازاريلا ما بي تي
+print(NAME_EN)      # Kasarella AI MBT
+print(FOUNDER)      # المهندس الخبير الدغريري
+print(FOUNDED)      # 25-01-2026
+```
+
 ### الاستخدام الأساسي - Basic Usage
 
 ```python
@@ -54,32 +77,40 @@ print(response['answer'])
 ### استخدام النظام الكامل - Using the Complete System
 
 ```bash
-# Run the main application
+# Run the main application (displays identity banner)
 python main.py
 ```
 
 ### مثال على الاستخدام - Example Usage
 
 ```bash
-# Run the example script
+# Run the example script (displays identity banner)
 python example_usage.py
+
+# Test the identity system
+python test_identity.py
 ```
 
 ## الهيكل - Structure
 
 ```
 the-kas-ai/
+├── core/
+│   ├── __init__.py
+│   └── identity.py             # نظام الهوية الرسمية
 ├── experts/
 │   ├── __init__.py
-│   └── daghreeri_expert.py    # الخبير الدغريري
-├── main.py                     # التطبيق الرئيسي
-├── example_usage.py            # مثال على الاستخدام
-├── requirements.txt            # المتطلبات
-└── README.md                   # هذا الملف
+│   └── daghreeri_expert.py     # الخبير الدغريري
+├── main.py                      # التطبيق الرئيسي
+├── example_usage.py             # مثال على الاستخدام
+├── test_identity.py             # اختبار نظام الهوية
+├── requirements.txt             # المتطلبات
+└── README.md                    # هذا الملف
 ```
 
 ## المميزات - Features
 
+✅ هوية رسمية موحدة قابلة للاستدعاء برمجياً  
 ✅ خبير متخصص في الإجابات المباشرة (الخبير الدغريري)  
 ✅ واجهة برمجية سهلة الاستخدام  
 ✅ دعم اللغة العربية والإنجليزية  
