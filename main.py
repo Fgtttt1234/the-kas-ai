@@ -4,6 +4,7 @@ Main application file for the KAS AI system with expert integration.
 """
 
 from experts import DaghreerIExpert
+from core.identity import banner as identity_banner
 
 
 class KasAI:
@@ -65,6 +66,10 @@ class KasAI:
 
 def main():
     """Main entry point for the application."""
+    # عرض الهوية الرسمية - Display official identity
+    print(identity_banner())
+    print()
+    
     print("=" * 60)
     print("مرحباً بك في نظام KAS للذكاء الاصطناعي")
     print("Welcome to KAS AI System")
