@@ -3,7 +3,7 @@ KAS AI - نظام الذكاء الاصطناعي
 Main application file for the KAS AI system with expert integration.
 """
 
-from experts import DaghreerIExpert
+from experts import DaghreerIExpert, KasarellaExpert
 
 
 class KasAI:
@@ -23,6 +23,11 @@ class KasAI:
         daghreeri = DaghreerIExpert()
         self.experts["daghreeri"] = daghreeri
         self.experts["الدغريري"] = daghreeri
+        
+        # Initialize خبيرة كازاريلا
+        kasarella = KasarellaExpert()
+        self.experts["kasarella"] = kasarella
+        self.experts["كازاريلا"] = kasarella
     
     def ask(self, question, expert_name="daghreeri"):
         """
