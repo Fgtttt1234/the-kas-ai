@@ -1,48 +1,55 @@
 """
-مثال على استخدام الخبير الدغريري
-Example usage of the Daghreeri Expert
+مثال على استخدام الخبراء
+Example usage of the Experts
 """
 
-from experts import DaghreerIExpert
+from experts import DaghreerIExpert, KasarellaExpert
 
 
 def main():
-    """Demonstrate the usage of الخبير الدغريري."""
+    """Demonstrate the usage of different experts."""
     
-    # Create an instance of the Daghreeri Expert
-    expert = DaghreerIExpert()
-    
+    # الخبير الدغريري - Daghreeri Expert
     print("=" * 60)
-    print(f"الخبير: {expert.name}")
+    print("🎯 الخبير الدغريري - Daghreeri Expert")
     print("=" * 60)
     
-    # Get expert information
-    info = expert.get_info()
+    daghreeri = DaghreerIExpert()
+    info = daghreeri.get_info()
     print(f"\nالوصف: {info['description']}")
     print(f"الأسلوب: {info['style']}")
     print("\nالقدرات:")
     for capability in info['capabilities']:
         print(f"  • {capability}")
     
-    # Example questions
-    questions = [
-        "ما هي أفضل طريقة لتعلم البرمجة؟",
-        "كيف أبدأ مشروعي الخاص؟",
-        "ما هي النصيحة الأهم للنجاح؟"
-    ]
+    print("\n" + "-" * 60)
+    question1 = "ما هي أفضل طريقة لتعلم البرمجة؟"
+    print(f"السؤال: {question1}")
+    print("-" * 60)
+    response = daghreeri.process_question(question1)
+    print(response['answer'])
     
-    print("\n" + "=" * 60)
-    print("أمثلة على الأسئلة والأجوبة")
+    # خبيرة كازاريلا - Kasarella Expert
+    print("\n\n" + "=" * 60)
+    print("✨ خبيرة كازاريلا - Kasarella Expert")
     print("=" * 60)
     
-    for i, question in enumerate(questions, 1):
-        print(f"\n[مثال {i}]")
-        print(f"السؤال: {question}")
-        print("-" * 60)
-        
-        response = expert.process_question(question)
-        print(response['answer'])
-        print()
+    kasarella = KasarellaExpert()
+    info = kasarella.get_info()
+    print(f"\nالوصف: {info['description']}")
+    print(f"الأسلوب: {info['style']}")
+    print("\nالقدرات:")
+    for capability in info['capabilities']:
+        print(f"  • {capability}")
+    
+    print("\n" + "-" * 60)
+    question2 = "كيف أحقق أحلامي؟"
+    print(f"السؤال: {question2}")
+    print("-" * 60)
+    response = kasarella.process_question(question2)
+    print(response['answer'])
+    
+    print("\n" + "=" * 60)
 
 
 if __name__ == "__main__":
