@@ -23,6 +23,16 @@
 
 أسلوب كازاريلا يجعل التعلم رحلة ممتعة ومشوقة من خلال القصص والخيال.
 
+### 💭 خبيرة أنا - Ana Expert
+خبيرة متخصصة في تقديم إجابات شخصية من منظور الأنا والتأمل الذاتي. تتميز هذه الخبيرة بـ:
+
+- **إجابات شخصية بضمير المتكلم** - Personal first-person answers
+- **منظور تأملي وفلسفي** - Introspective and philosophical perspective
+- **تعاطف وفهم حقيقي** - Empathy and genuine understanding
+- **مشاركة التجربة الشخصية** - Sharing personal experience
+
+أسلوب أنا يقدم منظور شخصي يساعد على التأمل والفهم العميق للنفس.
+
 ## التثبيت - Installation
 
 ```bash
@@ -39,7 +49,7 @@ pip install -r requirements.txt
 ### الاستخدام الأساسي - Basic Usage
 
 ```python
-from experts import DaghreerIExpert, KasarellaExpert
+from experts import DaghreerIExpert, KasarellaExpert, AnaExpert
 
 # Create an instance of the Daghreeri Expert
 daghreeri_expert = DaghreerIExpert()
@@ -53,6 +63,13 @@ kasarella_expert = KasarellaExpert()
 
 # Ask a question with a storytelling style
 response = kasarella_expert.process_question("كيف أحقق أحلامي؟")
+print(response['answer'])
+
+# Create an instance of the Ana Expert
+ana_expert = AnaExpert()
+
+# Ask a question with a personal, introspective style
+response = ana_expert.process_question("ما معنى السعادة؟")
 print(response['answer'])
 ```
 
@@ -77,7 +94,8 @@ the-kas-ai/
 ├── experts/
 │   ├── __init__.py
 │   ├── daghreeri_expert.py    # الخبير الدغريري
-│   └── kasarella_expert.py    # خبيرة كازاريلا
+│   ├── kasarella_expert.py    # خبيرة كازاريلا
+│   └── ana_expert.py          # خبيرة أنا
 ├── main.py                     # التطبيق الرئيسي
 ├── example_usage.py            # مثال على الاستخدام
 ├── requirements.txt            # المتطلبات
@@ -88,6 +106,7 @@ the-kas-ai/
 
 ✅ خبير متخصص في الإجابات المباشرة (الخبير الدغريري)  
 ✅ خبيرة متخصصة في الإجابات الإبداعية (خبيرة كازاريلا)  
+✅ خبيرة متخصصة في الإجابات الشخصية التأملية (خبيرة أنا)  
 ✅ واجهة برمجية سهلة الاستخدام  
 ✅ دعم اللغة العربية والإنجليزية  
 ✅ قابل للتوسع بإضافة خبراء جدد  
