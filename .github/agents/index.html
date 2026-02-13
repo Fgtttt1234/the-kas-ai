@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kazarella AI Chat</title>
+  <style>
+    :root{
+      --bg:#0b0f17; --panel:#0f1626; --panel2:#101b2f; --border:#1f2a44;
+      --text:#e8eefc; --muted:#9fb0d1; --accent:#5b8cff; --good:#22c55e;
+      --bubbleUser:#1e3a8a; --bubbleBot:#111827;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Naskh Arabic", sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); background:radial-gradient(1200px 700px at 70% -10%, rgba(91,140,255,.25), transparent),
+      radial-gradient(900px 600px at -10% 30%, rgba(34,197,94,.12), transparent),
+      var(--bg);
+      color:var(--text);
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:18px;
+    }
+    .app{
+      width:min(980px, 100%);
+      height:min(760px, 100%);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+    }
+    @media (max-width: 860px){
+      .app{ grid-template-columns: 1fr; height: 100vh; border-radius: 0; }
+      .sidebar{ display:none; }
+    }
+    .sidebar{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+      border-left:1px solid var(--border);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:12px; border:1px solid var(--border);
+      border-radius:16px; background:rgba(15,22,38,.55);
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background:conic-gradient(from 210deg, var(--accent), rgba(34,197,94,.9), rgba(91,140,255,.65));
+      display:grid; place-items:center;
+      box-shadow:0 8px 16px rgba(0,0,0,.35);
+      font-weight:800;
+    }
+    .brand h1{ margin:0; font-size:16px; line-height:1.2 }
+    .brand p{ margin:2px 0 0; color:var(--muted); font-size:12px }
+    .card{
+      padding:12px; border:1px solid var(--border);
+      border-radius:16px; background:rgba(15,22,38,.45);
+    }
+    .card h3{ margin:0 0 10px; font-size:13px; color:var(--muted); font-weight:700; letter-spacing:.2px }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px; border-radius:999px;
+      background:rgba(91,140,255,.12);
+      border:1px solid rgba(91,140,255,.25);
+      color:var(--text);
+      font-size:12px;
+      margin:4px 6px 0 0;
+    }
+    .dot{ width:8px; height:8px; border-radius:99px; background:var(--good); box-shadow:0 0 0 4px rgba(34,197,94,.15) }
+    .hint{
+      color:var(--muted); font-size:12px; line-height:1.6; margin:0;
+    }
+
+    .main{
+      display:flex; flex-direction:column; height:100%;
+      background:linear-gradient(180deg, rgba(16,27,47,.55), rgba(11,15,23,.9));
+    }
+    .topbar{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background:rgba(11,15,23,.65);
+      backdrop-filter: blur(8px);
+    }
+    .title{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .title b{ font-size:14px }
+    .title span{ font-size:12px; color:var(--muted) }
+    .actions{
+      display:flex; gap:8px; align-items:center;
+    }
+    .btn{
+      appearance:none; border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:8px 10px; border-radius:12px;
+      font-size:12px; cursor:pointer;
+    }
+    .btn:hover{ border-color: rgba(91,140,255,.55); }
+    .btn.primary{
+      background:rgba(91,140,255,.14);
+      border-color: rgba(91,140,255,.35);
+    }
+
+    .chat{
+      flex:1;
+      overflow:auto;
+      padding:18px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .msg{
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
+      max-width: 860px;
+    }
+    .msg.user{ margin-right:auto; flex-direction: row-reverse; }
+    .avatar{
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      display:grid; place-items:center;
+      color:var(--muted);
+      font-weight:700;
+      flex: 0 0 auto;
+    }
+    .bubble{
+      padding:12px 14px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: rgba(17,24,39,.65);
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+      line-height:1.7;
+      font-size:14px;
+      white-space:pre-wrap;
+      word-wrap:break-word;
+    }
+    .user .bubble{
+      background: rgba(30,58,138,.55);
+      border-color: rgba(91,140,255,.35);
+    }
+    .meta{
+      font-size:11px; color:var(--muted); margin:4px 8px 0;
+    }
+
+    .composer{
+      padding:12px;
+      border-top:1px solid var(--border);
+      display:flex; gap:10px; align-items:flex-end;
+      background:rgba(11,15,23,.75);
+      backdrop-filter: blur(8px);
+    }
+    textarea{
+      width:100%;
+      min-height:44px;
+      max-height:140px;
+      resize:none;
+      border-radius:16px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+      line-height:1.6;
+    }
+    textarea:focus{ border-color: rgba(91,140,255,.6); }
+    .send{
+      min-width:92px;
+      border-radius:16px;
+      padding:12px 14px;
+      border:1px solid rgba(91,140,255,.45);
+      background: rgba(91,140,255,.18);
+      color:var(--text);
+      font-weight:800;
+      cursor:pointer;
+    }
+    .send:disabled{
+      opacity:.5; cursor:not-allowed;
+    }
+    .footnote{
+      padding:0 12px 12px;
+      color:var(--muted);
+      font-size:11px;
+    }
+    .kbd{
+      padding:2px 6px; border:1px solid var(--border);
+      border-radius:8px; background:rgba(255,255,255,.03);
+      font-size:10px; color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">KZ</div>
+        <div>
+          <h1>Kazarella AI</h1>
+          <p>واجهة شات — نسخة ويب</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>الحالة</h3>
+        <div class="pill"><span class="dot"></span> Ready</div>
+        <p class="hint">هذه واجهة شات جاهزة. حالياً الردود تجريبية (Demo). لاحقاً نربطها ببايثون أو API.</p>
+      </div>
+
+      <div class="card">
+        <h3>أوامر سريعة</h3>
+        <div class="pill">ابدأ: اكتب سؤال</div>
+        <div class="pill">مسح: زر "تفريغ"</div>
+        <div class="pill">إرسال: Enter</div>
+        <p class="hint">تقدر تستخدمها كواجهة لمشروعك the-kas-ai.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="title">
+          <b>💬 Kazarella AI Chat</b>
+          <span>واجهة شات بسيطة — عربية/إنجليزية</span>
+        </div>
+        <div class="actions">
+          <button class="btn" id="downloadBtn" title="تحميل المحادثة">تحميل</button>
+          <button class="btn primary" id="clearBtn" title="تفريغ المحادثة">تفريغ</button>
+        </div>
+      </div>
+
+      <div class="chat" id="chat"></div>
+
+      <div class="composer">
+        <textarea id="input" placeholder="اكتب رسالتك هنا..."></textarea>
+        <button class="send" id="sendBtn" disabled>إرسال</button>
+      </div>
+
+      <div class="footnote">
+        اختصار: <span class="kbd">Enter</span> إرسال — <span class="kbd">Shift</span>+<span class="kbd">Enter</span> سطر جديد
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const sendBtn = document.getElementById('sendBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    const state = {
+      messages: []
+    };
+
+    function nowTime(){
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2,'0');
+      const mm = String(d.getMinutes()).padStart(2,'0');
+      return `${hh}:${mm}`;
+    }
+
+    function addMessage(role, text){
+      const msg = { role, text, time: nowTime() };
+      state.messages.push(msg);
+
+      const wrap = document.createElement('div');
+      wrap.className = `msg ${role}`;
+
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = role === 'user' ? 'أنت' : 'KZ';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = text;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = msg.time;
+
+      const content = document.createElement('div');
+      content.appendChild(bubble);
+      content.appendChild(meta);
+
+      wrap.appendChild(avatar);
+      wrap.appendChild(content);
+
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function demoReply(userText){
+      // رد تجريبي ذكي (بدون API) — نقدر نبدله لاحقاً بربط بايثون/سيرفر
+      const t = userText.trim().toLowerCase();
+
+      if (t.includes('السلام') || t.includes('مرحبا') || t.includes('هلا')) {
+        return "هلا! أنا Kazarella AI 🤖\nقلّي وش تبغى نسوي؟ (برمجة/تحليل بيانات/أمن/أفكار تطبيق)";
+      }
+
+      if (t.includes('github') || t.includes('pages')) {
+        return "إذا تبغى تنشر الصفحة: فعل GitHub Pages من Settings → Pages، واختر Branch: main و Folder: /(root).";
+      }
+
+      if (t.includes('api') || t.includes('بايثون') || t.includes('python')) {
+        return "تمام. الخطوة الجاية: نسوي Backend بسيط (Flask/FastAPI) ونخلي الواجهة ترسل طلبات وتستقبل الرد.\nقلّي تبي Flask ولا FastAPI؟";
+      }
+
+      return "استلمت 👍\n(رد تجريبي)\nاكتب: 'اربطها ببايثون' لو تبغى نخليها شات حقيقي متصل بمشروعك.";
+    }
+
+    function send(){
+      const text = input.value.trim();
+      if(!text) return;
+
+      addMessage('user', text);
+      input.value = '';
+      updateSend();
+
+      // محاكاة تأخير بسيط
+      setTimeout(() => {
+        const reply = demoReply(text);
+        addMessage('bot', reply);
+      }, 350);
+    }
+
+    function updateSend(){
+      sendBtn.disabled = input.value.trim().length === 0;
+    }
+
+    input.addEventListener('input', updateSend);
+    sendBtn.addEventListener('click', send);
+
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        send();
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      state.messages = [];
+      chat.innerHTML = '';
+      addMessage('bot', "تم ✅\nابدأ اكتب رسالتك…");
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const lines = state.messages.map(m => `[${m.time}] ${m.role.toUpperCase()}: ${m.text}`);
+      const blob = new Blob([lines.join('\\n\\n')], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'kazarella-chat.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // رسالة ترحيب
+    addMessage('bot', "أهلاً! أنا Kazarella AI 🤖\nهذه واجهة شات جاهزة.\nاكتب سؤالك الآن.");
+  </script>
+</body>
+</html>
