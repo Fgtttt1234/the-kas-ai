@@ -41,6 +41,15 @@ class KazarellaLinkActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        val webView = findViewById<WebView>(R.id.webView)
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
