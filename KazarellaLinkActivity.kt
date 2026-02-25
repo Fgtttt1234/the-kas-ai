@@ -3,6 +3,8 @@ package com.kazarella.app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +20,13 @@ class KazarellaLinkActivity : AppCompatActivity() {
         val openBtn = findViewById<Button>(R.id.btnOpenLink)
         val shareBtn = findViewById<Button>(R.id.btnShareLink)
         val linkText = findViewById<TextView>(R.id.tvLink)
+        val webView = findViewById<WebView>(R.id.webView)
 
         linkText.text = kazarellaUrl
+
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl(kazarellaUrl)
 
         openBtn.setOnClickListener {
             openUrl(kazarellaUrl)
