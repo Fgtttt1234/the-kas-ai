@@ -24,14 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="افتح رابط كازاريلا"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/kazarella_accent"/>
 
         <Button
             android:id="@+id/btnShareLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="شارك الرابط"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/kazarella_accent"/>
     </LinearLayout>
 
     <WebView
