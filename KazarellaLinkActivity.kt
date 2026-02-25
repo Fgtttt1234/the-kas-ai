@@ -58,8 +58,8 @@ class KazarellaLinkActivity : AppCompatActivity() {
     private fun shareUrl(url: String) {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, url)
+            putExtra(Intent.EXTRA_TEXT, "جرب منصة كازاريلا الآن 🚀\n$url")
         }
-        startActivity(Intent.createChooser(shareIntent, "شارك رابط كازاريلا"))
+        startActivity(Intent.createChooser(shareIntent, "شارك كازاريلا"))
     }
 }
